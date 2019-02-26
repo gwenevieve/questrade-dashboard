@@ -1,0 +1,113 @@
+@import "mixins/mixins";
+
+body p {
+  color: $light-font;
+  font-family: $main-font;
+}
+
+.navbar {
+  background: #d6d6d6;
+  h1 {
+    color: #3a3a3a;
+  }
+  .search__submit {
+    color: #3a3a3a;
+    &:hover,
+    :active {
+      background: #4a4a4a;
+      color: $light-font;
+      transition: 0.7s;
+    }
+  }
+}
+
+.row {
+  margin: 0px;
+}
+
+.sidebar--panel {
+  background: $sidebar-background;
+  height: 800px;
+  h2,
+  h5 {
+    color: $sidebar-font-color;
+  }
+  h5 {
+    color: $sidebar-font-color;
+    font-weight: 700;
+    font-size: 22px;
+    font-family: $main-font;
+  }
+  p {
+    color: $sidebar-font-color;
+    margin-bottom: 0.5rem;
+  }
+  ul {
+    padding: 0px;
+  }
+  li {
+    list-style-type: none;
+    font-family: $main-font;
+    font-size: 16px;
+    color: $sidebar-font-color;
+    padding: 20px 0;
+    height: 64px;
+    &:nth-child(odd) {
+      background: #4a4a4a;
+    }
+  }
+  .watchlistLastTradePrice li span {
+    border-radius: 5px;
+    height: 35px;
+    width: 80px;
+    display: flex;
+    margin: -5px auto;
+    justify-content: center;
+    align-items: center;
+  }
+  .watchlistName li {
+    padding-left: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.watchlistOpenPrice,
+.watchlistLowPrice,
+.watchlistHighPrice,
+.watchlistLastTradePrice {
+  text-align: center;
+}
+
+.data--chart {
+  background: #ffffff;
+  overflow: hidden;
+  min-height: 60%;
+  p {
+    color: #3a3a3a;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .marketStatus {
+    font-weight: 300;
+  }
+}
+
+.search--chart {
+  background: #2f69c6;
+  height: 40%;
+  min-height: 40%;
+  ul {
+    padding: 0px;
+  }
+  li {
+    color: $light-font;
+    list-style-type: none;
+  }
+  h5 {
+    color: $light-font;
+  }
+}
+
+.active {
+  background: #292929;
+}

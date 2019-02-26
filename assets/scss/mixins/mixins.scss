@@ -1,0 +1,35 @@
+// Colors
+
+$main-background: #2f69c6;
+$light-font: #ffffff;
+$dark-font: #b1b1b1;
+$sidebar-background: #3a3a3a;
+$sidebar-font-color: #ffffff;
+$main-font: 'Lato', sans-serif;
+
+// Skeleton screen
+
+@keyframes pulse {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
+
+.element {
+  &--loading {
+    height: 8px;
+    margin: 15px 10px;
+    animation: pulse 1s infinite ease-in-out;
+  }
+  &--chart {
+    height: 400px;
+    margin: 15px 10px;
+    animation: pulse 1s infinite ease-in-out;
+  }
+}

@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv").config();
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -12,17 +13,16 @@ app.get("/", (req, res) => {
 });
 
 var Questrade = require("questrade");
-var qt = new Questrade("");
+var qt = new Questrade(process.env.TOKEN);
 qt.account = "123456";
 
 qt.on("ready", function(err, res) {
   if (err) {
     console.log(err);
   }
-  app.get("/test", (req, res) => {
+  app.get("/watchlist", (req, res) => {
     getWatchlist(res);
   });
-  console.log("test");
 });
 
 function getWatchlist(res) {

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <main class="container-fluid main--background px-0">
+    <header>
+      <nav class="navbar navbar-light panel__shadow pl-4">
+        <h1>Stock Dashboard</h1>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Symbol Search" aria-label="Search" id="search"
+            name="search" />
+          <button class="btn search__submit my-2 my-sm-0" type="submit">
+            Go
+          </button>
+        </form>
+      </nav>
+    </header>
+    <div class="row">
+      <div class="col-12 col-sm-5 sidebar--panel p-0">
+        <h2 class="pt-3 pl-4">Your watchlist</h2>
+        <div class="row pt-5 pb-5">
+          <div class="col-sm-3 p-0">
+            <h5 class="pl-4 pb-2">Name</h5>
+            <ul class="watchlistName">
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+              <li class="element--loading ml-4"></li>
+            </ul>
+          </div>
+          <div class="col-sm-2 p-0">
+            <h5 class="text-center pb-2">Open</h5>
+            <ul class="watchlistOpenPrice">
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+            </ul>
+          </div>
+          <div class="col-sm-2 p-0">
+            <h5 class="text-center pb-2">High</h5>
+            <ul class="watchlistHighPrice">
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+            </ul>
+          </div>
+          <div class="col-sm-2 p-0">
+            <h5 class="text-center pb-2">Low</h5>
+            <ul class="watchlistLowPrice">
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+              <li class="element--loading"></li>
+            </ul>
+          </div>
+          <div class="col-sm-3 p-0">
+            <h5 class="text-center pb-2">Last</h5>
+            <ul class="watchlistLastTradePrice">
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+              <li class="element--loading mr-4"></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-12 col-sm-7 p-0">
+        <div class="row data--chart pt-3">
+          <p class="pl-4">Market: <span class="marketStatus"></span></p>
+          <div class="col-12 element--chart">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+        <div class="row search--chart pt-3">
+          <div class="col-3">
+            <h5>Name</h5>
+            <ul class="name"></ul>
+          </div>
+          <div class="col-3">
+            <h5>Symbol ID</h5>
+            <ul class="symbolId"></ul>
+          </div>
+          <div class="col-6">
+            <h5>Description</h5>
+            <ul class="symbolDesc"></ul>
+          </div>
+        </div>
+      </div>
+  </main>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+<script src="/scripts/script.js"></script>
+
+</html>
