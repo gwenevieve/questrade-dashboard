@@ -53,7 +53,7 @@ body p {
     padding: 20px 0;
     height: 64px;
     &:nth-child(odd) {
-      background: #4a4a4a;
+      background: darken($sidebar-background, 3%);
     }
   }
   .watchlistLastTradePrice li span {
@@ -69,6 +69,12 @@ body p {
     padding-left: 1.5rem;
     font-weight: 700;
   }
+  [data-value="gain"] {
+    background: $stock-green;
+  }
+  [data-value="loss"] {
+    background: $stock-red;
+  }
 }
 
 .watchlistOpenPrice,
@@ -83,7 +89,7 @@ body p {
   overflow: hidden;
   height: 60%;
   p {
-    color: #3a3a3a;
+    color: $dark-font;
     font-weight: 700;
     font-size: 16px;
   }
@@ -106,8 +112,4 @@ body p {
   h5 {
     color: $light-font;
   }
-}
-
-.active {
-  background: #292929;
 }

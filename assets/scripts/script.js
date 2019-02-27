@@ -25,29 +25,22 @@ $(document).ready(function() {
         }
 
         watchlistSymbolName += `<li>${value.symbol}</li>`;
-        watchlistLastTradePrice += `<li><span>${value.lastTradePrice}</span></li>`;
+
+        if (this.openPrice > this.lastTradePrice == true) {
+          watchlistLastTradePrice += `<li><span data-value="gain">${value.lastTradePrice}</span></li>`;
+        } else if (this.openPrice < this.lastTradePrice == true) {
+          watchlistLastTradePrice += `<li><span data-value="loss">${value.lastTradePrice}</span></li>`;
+        }
+
+        if (marketOpen == false) {
+          $(".watchlistLastTradePrice li span").css("background", "#797979");
+        }
 
         $(".watchlistName").html(watchlistSymbolName);
         $(".watchlistLastTradePrice").html(watchlistLastTradePrice);
         $(".watchlistOpenPrice").html(watchlistOpenPrice);
         $(".watchlistHighPrice").html(watchlistHighPrice);
         $(".watchlistLowPrice").html(watchlistLowPrice);
-
-        if (marketOpen == false) {
-          $(".watchlistLastTradePrice li span").css("background", "#797979");
-        }
-
-        if (
-          marketOpen == true &&
-          this.openPrice > this.lastTradePrice == true
-        ) {
-          $(".watchlistLastTradePrice li span").css("background", "red");
-        } else if (
-          marketOpen == true &&
-          this.openPrice < this.lastTradePrice == true
-        ) {
-          $(".watchlistLastTradePrice li span").css("background", "#31c331");
-        }
       });
 
       fetch("/chartinfo", {})

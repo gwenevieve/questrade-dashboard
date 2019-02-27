@@ -2,12 +2,13 @@
 
 $main-background: #2f69c6;
 $light-font: #ffffff;
-$dark-font: #b1b1b1;
+$dark-font: #3a3a3a;
 $sidebar-background: #3a3a3a;
 $sidebar-font-color: #ffffff;
 $main-font: 'Lato', sans-serif;
 
-// Skeleton screen
+$stock-green: #2fc32f;
+$stock-red: #de2727;
 
 @keyframes pulse {
   0% {
@@ -24,11 +25,6 @@ $main-font: 'Lato', sans-serif;
 .element {
   &--loading {
     height: 8px;
-    margin: 15px 10px;
-    animation: pulse 1s infinite ease-in-out;
-  }
-  &--chart {
-    height: 400px;
     margin: 15px 10px;
     animation: pulse 1s infinite ease-in-out;
   }
