@@ -1,12 +1,10 @@
 $(document).ready(function() {
   var marketOpen;
 
-  $.ajax({
-    url: "/watchlist",
-    type: "GET",
-    success: function(watchlistData) {
-      console.log(watchlistData);
-
+  fetch("/watchlist", {})
+    .then(response => response.json())
+    .then(json => {
+      let watchlistData = json;
       let watchlistSymbolName = "";
       let watchlistOpenPrice = "";
       let watchlistHighPrice = "";
@@ -26,8 +24,6 @@ $(document).ready(function() {
           watchlistLowPrice += `<li>--</li>`;
         }
 
-        watchlistChartData = [6770].lastTradePrice;
-
         watchlistSymbolName += `<li>${value.symbol}</li>`;
         watchlistLastTradePrice += `<li><span>${value.lastTradePrice}</span></li>`;
 
@@ -39,25 +35,49 @@ $(document).ready(function() {
 
         if (marketOpen == false) {
           $(".watchlistLastTradePrice li span").css("background", "#797979");
-        } else if (watchlistOpenPrice > watchlistLastTradePrice) {
+        }
+
+        if (
+          marketOpen == true &&
+          this.openPrice > this.lastTradePrice == true
+        ) {
           $(".watchlistLastTradePrice li span").css("background", "red");
-        } else if (watchlistOpenPrice < watchlistLastTradePrice) {
+        } else if (
+          marketOpen == true &&
+          this.openPrice < this.lastTradePrice == true
+        ) {
           $(".watchlistLastTradePrice li span").css("background", "#31c331");
-        } else {
         }
       });
 
-      chartDisplay(watchlistOpenPrice, watchlistLastTradePrice);
-      console.log(myChart.data);
+      fetch("/chartinfo", {})
+        .then(response => response.json())
+        .then(json => {
+          let chartInfo = json;
+          $.each(chartInfo, function(index, stock) {
+            results = stock;
+            $.each(chartInfo, function(i, results) {
+              BABA = results[0].totalCost;
+              CRON = results[1].totalCost;
+            });
+          });
 
-      addData(myChart, "one", watchlistChartData);
-    },
-    error: console.error
-  });
+          chartDisplay();
+        })
+        .catch(error => console.log(error));
+    })
+    .catch(error => console.log(error));
 
   // Form submit
+
   $(".search__submit").on("click", function(e) {
     e.preventDefault();
+    $(".search__submit").prop("disabled", true);
+
+    setTimeout(function() {
+      $(".search__submit").prop("disabled", false);
+    }, 1000);
+
     $.ajax({
       url: "/search",
       type: "GET",
@@ -65,14 +85,11 @@ $(document).ready(function() {
         symbol: $("#search").val()
       },
       success: function(responseData) {
-        console.log(responseData);
-
         let symbolName = "";
         let symbolId = "";
         let symbolDesc = "";
 
         $.each(responseData, function(index, value) {
-          console.log(index);
           if (index === 9) {
             return false;
           }
@@ -91,40 +108,32 @@ $(document).ready(function() {
   // Chart
 
   chartDisplay = (watchlistOpenPrice, watchlistLastTradePrice) => {
-    console.log(watchlistOpenPrice);
     let ctx = document.getElementById("myChart").getContext("2d");
     myChart = new Chart(ctx, {
-      type: "line",
+      type: "doughnut",
       data: {
-        labels: ["one", "two"],
+        labels: ["BABA", "CRON"],
         datasets: [
           {
-            label: "Current price",
-            fill: false,
-            borderColor: "#2fb5c6",
-            data: [watchlistOpenPrice, watchlistLastTradePrice]
+            fill: true,
+            backgroundColor: ["#6C46D6", "#8F42F4"],
+            data: [BABA, CRON]
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 30
+          }
+        }
       }
     });
-    //console.log(myChart.data);
-  };
-
-  //Chart update
-
-  addData = (chart, label, data) => {
-    setInterval(function() {
-      console.log("updating");
-      chart.data.labels.push(label);
-      chart.data.datasets.forEach(dataset => {
-        dataset.data.push([data]);
-      });
-      chart.update();
-    }, 5000);
   };
 
   checkMarketStatus = () => {
@@ -132,7 +141,6 @@ $(document).ready(function() {
     let beforeTime = moment("09:30:00", "HH:mm:ss");
     let afterTime = moment("16:00:00", "HH:mm:ss");
     let marketHours = moment().isBetween(beforeTime, afterTime);
-    console.log(marketHours);
     if (marketHours == true) {
       marketOpen = true;
       $(".marketStatus").html("Open").css("color", "#31c331");

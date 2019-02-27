@@ -14,7 +14,6 @@ app.get("/", (req, res) => {
 
 var Questrade = require("questrade");
 var qt = new Questrade(process.env.TOKEN);
-qt.account = "123456";
 
 qt.on("ready", function(err, res) {
   if (err) {
@@ -23,7 +22,21 @@ qt.on("ready", function(err, res) {
   app.get("/watchlist", (req, res) => {
     getWatchlist(res);
   });
+
+  app.get("/chartinfo", (req, res) => {
+    getChartInfo(res);
+  });
 });
+
+function getChartInfo(res) {
+  qt.getPositions(function(err, positions) {
+    if (err) {
+      console.log(err);
+    }
+    chartInfo = positions;
+    res.send(chartInfo);
+  });
+}
 
 function getWatchlist(res) {
   var watchlist = [
@@ -43,7 +56,7 @@ function getWatchlist(res) {
       console.log(err);
     }
     watchlistResults = quotes;
-    console.log(watchlistResults);
+    //console.log(watchlistResults);
     res.send(watchlistResults);
   });
 }
@@ -54,7 +67,7 @@ function searchQt(res) {
       console.log(err);
     }
     result = symbol;
-    console.log(result);
+    //console.log(result);
     res.json(result);
     //result.map(item =>
     //console.log(item.symbol + item.description + item.symbolId)
