@@ -19,7 +19,13 @@ qt.on("ready", function(err, res) {
   if (err) {
     console.log(err);
   }
+
   app.get("/watchlist", (req, res) => {
+    res.writeHead(200, {
+      Connection: "keep-alive",
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache"
+    });
     getWatchlist(res);
   });
 
@@ -56,8 +62,13 @@ function getWatchlist(res) {
       console.log(err);
     }
     watchlistResults = quotes;
-    //console.log(watchlistResults);
-    res.send(watchlistResults);
+
+    res.write("data: " + JSON.stringify({ watchlistResults }) + "\n\n");
+
+    setInterval(function() {
+      console.log(JSON.stringify(watchlistResults));
+      res.write("data: " + JSON.stringify({ watchlistResults }) + "\n\n");
+    }, 5000);
   });
 }
 

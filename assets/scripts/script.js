@@ -1,10 +1,11 @@
 $(document).ready(function() {
   var marketOpen;
 
-  fetch("/watchlist", {})
-    .then(response => response.json())
-    .then(json => {
-      let watchlistData = json;
+  var update = new EventSource("/watchlist");
+  update.onmessage = function(e) {
+    let watchlistData = JSON.parse(e.data);
+
+    $.each(watchlistData, function(index, result) {
       let watchlistSymbolName = "";
       let watchlistOpenPrice = "";
       let watchlistHighPrice = "";
@@ -13,7 +14,9 @@ $(document).ready(function() {
 
       checkMarketStatus();
 
-      $.each(watchlistData, function(index, value) {
+      $.each(result, function(index, value) {
+        watchlistSymbolName += `<li>${value.symbol}</li>`;
+
         if (marketOpen == true) {
           watchlistOpenPrice += `<li>${value.openPrice}</li>`;
           watchlistHighPrice += `<li>${value.highPrice}</li>`;
@@ -24,16 +27,18 @@ $(document).ready(function() {
           watchlistLowPrice += `<li>--</li>`;
         }
 
-        watchlistSymbolName += `<li>${value.symbol}</li>`;
-
-        if (this.openPrice > this.lastTradePrice == true) {
+        if (
+          marketOpen == true &&
+          this.openPrice > this.lastTradePrice == true
+        ) {
           watchlistLastTradePrice += `<li><span data-value="gain">${value.lastTradePrice}</span></li>`;
-        } else if (this.openPrice < this.lastTradePrice == true) {
+        } else if (
+          marketOpen == true &&
+          this.openPrice < this.lastTradePrice == true
+        ) {
           watchlistLastTradePrice += `<li><span data-value="loss">${value.lastTradePrice}</span></li>`;
-        }
-
-        if (marketOpen == false) {
-          $(".watchlistLastTradePrice li span").css("background", "#797979");
+        } else {
+          watchlistLastTradePrice += `<li><span data-value="closed">${value.lastTradePrice}</span></li>`;
         }
 
         $(".watchlistName").html(watchlistSymbolName);
@@ -42,22 +47,22 @@ $(document).ready(function() {
         $(".watchlistHighPrice").html(watchlistHighPrice);
         $(".watchlistLowPrice").html(watchlistLowPrice);
       });
+    });
+  };
 
-      fetch("/chartinfo", {})
-        .then(response => response.json())
-        .then(json => {
-          let chartInfo = json;
-          $.each(chartInfo, function(index, stock) {
-            results = stock;
-            $.each(chartInfo, function(i, results) {
-              BABA = results[0].totalCost;
-              CRON = results[1].totalCost;
-            });
-          });
-
-          chartDisplay();
-        })
-        .catch(error => console.log(error));
+  fetch("/chartinfo", {})
+    .then(response => response.json())
+    .then(json => {
+      let chartInfo = json;
+      $.each(chartInfo, function(index, stock) {
+        results = stock;
+        $.each(chartInfo, function(i, results) {
+          BABA = results[0].totalCost;
+          CRON = results[1].totalCost;
+        });
+      });
+      1;
+      chartDisplay();
     })
     .catch(error => console.log(error));
 
@@ -83,7 +88,7 @@ $(document).ready(function() {
         let symbolDesc = "";
 
         $.each(responseData, function(index, value) {
-          if (index === 9) {
+          if (index === 7) {
             return false;
           }
           symbolName += `<li>${value.symbol}</li>`;
@@ -100,7 +105,7 @@ $(document).ready(function() {
 
   // Chart
 
-  chartDisplay = (watchlistOpenPrice, watchlistLastTradePrice) => {
+  chartDisplay = () => {
     let ctx = document.getElementById("myChart").getContext("2d");
     myChart = new Chart(ctx, {
       type: "doughnut",
@@ -109,7 +114,7 @@ $(document).ready(function() {
         datasets: [
           {
             fill: true,
-            backgroundColor: ["#6C46D6", "#8F42F4"],
+            backgroundColor: ["#6825c3", "#8F42F4"],
             data: [BABA, CRON]
           }
         ]
@@ -119,18 +124,16 @@ $(document).ready(function() {
         maintainAspectRatio: false,
         layout: {
           padding: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 30
+            bottom: 50
           }
         }
       }
     });
   };
 
+  // Check if market is open
+
   checkMarketStatus = () => {
-    let now = moment().format("HH:mm:ss");
     let beforeTime = moment("09:30:00", "HH:mm:ss");
     let afterTime = moment("16:00:00", "HH:mm:ss");
     let marketHours = moment().isBetween(beforeTime, afterTime);

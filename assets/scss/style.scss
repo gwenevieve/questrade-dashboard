@@ -75,6 +75,9 @@ body p {
   [data-value="loss"] {
     background: $stock-red;
   }
+  [data-value="closed"] {
+    background: lighten($sidebar-background, 10%);
+  }
 }
 
 .watchlistOpenPrice,
@@ -108,6 +111,7 @@ body p {
   li {
     color: $light-font;
     list-style-type: none;
+    padding: 2px 0px;
   }
   h5 {
     color: $light-font;
