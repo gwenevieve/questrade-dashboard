@@ -24,8 +24,7 @@ $stock-red: #de2727;
 
 .element {
   &--loading {
-    height: 8px;
-    margin: 15px 10px;
+    margin: 10px 10px;
     animation: pulse 1s infinite ease-in-out;
   }
 }

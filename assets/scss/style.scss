@@ -104,7 +104,6 @@ body p {
 .search--chart {
   background: #2f69c6;
   height: 40%;
-  height: 40%;
   ul {
     padding: 0px;
   }
@@ -115,5 +114,37 @@ body p {
   }
   h5 {
     color: $light-font;
+  }
+}
+
+// Responsiveness
+
+@media (max-width: 575.98px) {
+  nav .form-inline {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 767.98px) {
+  h5 {
+    font-size: 18px;
+  }
+  .data--chart {
+    height: 500px;
+  }
+  .search--chart {
+    height: 400px;
+  }
+  .sidebar--panel {
+    height: unset;
+  }
+  .watchlistLastTradePrice li span {
+    font-size: 14px;
+    width: 65px !important;
+  }
+  .symbolDesc li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
