@@ -57,19 +57,17 @@ function getWatchlist(res) {
     29814
   ];
 
-  qt.getQuotes(watchlist, function(err, quotes) {
-    if (err) {
-      console.log(err);
-    }
-    watchlistResults = quotes;
+  setInterval(function() {
+    qt.getQuotes(watchlist, function(err, quotes) {
+      if (err) {
+        console.log(err);
+      }
+      watchlistResults = quotes;
 
-    res.write("data: " + JSON.stringify({ watchlistResults }) + "\n\n");
-
-    setInterval(function() {
-      console.log(JSON.stringify(watchlistResults));
+      //console.log(JSON.stringify(watchlistResults));
       res.write("data: " + JSON.stringify({ watchlistResults }) + "\n\n");
-    }, 5000);
-  });
+    });
+  }, 1000);
 }
 
 function searchQt(res) {

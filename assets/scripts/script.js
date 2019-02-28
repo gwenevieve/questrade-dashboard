@@ -29,12 +29,12 @@ $(document).ready(function() {
 
         if (
           marketOpen == true &&
-          this.openPrice > this.lastTradePrice == true
+          this.openPrice < this.lastTradePrice == true
         ) {
           watchlistLastTradePrice += `<li><span data-value="gain">${value.lastTradePrice}</span></li>`;
         } else if (
           marketOpen == true &&
-          this.openPrice < this.lastTradePrice == true
+          this.openPrice > this.lastTradePrice == true
         ) {
           watchlistLastTradePrice += `<li><span data-value="loss">${value.lastTradePrice}</span></li>`;
         } else {
