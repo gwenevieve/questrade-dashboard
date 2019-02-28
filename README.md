@@ -3,8 +3,9 @@
 stock dashboard using questrade api
 
 * html5
-* scss
+* css(scss)
 * bootstrap 4
-* node.js
-* jquery / javascript
+* node.js (express, sse)
+* jquery + javascript
+* npm + gulp
 * json api
