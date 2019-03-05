@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
 var Questrade = require("questrade");
 var qt = new Questrade(process.env.TOKEN);
 
+var options = {
+  test: true
+};
+
 qt.on("ready", function(err, res) {
   if (err) {
     console.log(err);
@@ -89,4 +93,4 @@ app.get("/search", function(req, res) {
   searchQt(res);
 });
 
-const server = app.listen(3000, function() {});
+const server = app.listen(process.env.PORT || 5000);
