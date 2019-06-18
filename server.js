@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 var Questrade = require("questrade");
-var qt = new Questrade(process.env.TOKEN);
+var qt = new Questrade(process.env.KEY);
 
 var options = {
   test: true
