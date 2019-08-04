@@ -1,8 +1,6 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
 const app = express();
 const path = require("path");
-const cors = require("cors");
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
@@ -81,11 +79,7 @@ function searchQt(res) {
       console.log(err);
     }
     result = symbol;
-    //console.log(result);
     res.json(result);
-    //result.map(item =>
-    //console.log(item.symbol + item.description + item.symbolId)
-    //);
   });
 }
 
