@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-
 app.use(express.static(__dirname + "/assets"));
 
 app.get("/", (req, res) => {
@@ -11,12 +9,8 @@ app.get("/", (req, res) => {
 });
 
 var Questrade = require("questrade");
-var qt = new Questrade('pETjmdmmeACMSpr-l_JbNEOSyjdczMOe0');
-
-var options = {
-	test: true,
-	keyDir: './keys'
-};
+var key = 'pETjmdmmeACMSpr-l_JbNEOSyjdczMOe0';
+var qt = new Questrade(key);
 
 qt.on("ready", function(err, res) {
   if (err) {
