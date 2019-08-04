@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 var Questrade = require("questrade");
-var qt = new Questrade('St-esQog6ylbeaRnTRi6gZYAQ1oGWMPL0');
+var qt = new Questrade('pETjmdmmeACMSpr-l_JbNEOSyjdczMOe0');
 
 var options = {
 	test: true,
