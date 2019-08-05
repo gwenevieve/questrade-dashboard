@@ -9,14 +9,12 @@ app.get("/", (req, res) => {
 });
 
 var Questrade = require("questrade");
-var key = 'pETjmdmmeACMSpr-l_JbNEOSyjdczMOe0';
-var qt = new Questrade(key);
+var keyDir = './seedToken';
+var qt = new Questrade(keyDir);
+
+qt.on("error", console.error);
 
 qt.on("ready", function(err, res) {
-  if (err) {
-    console.log(err);
-  }
-
   app.get("/watchlist", (req, res) => {
     res.writeHead(200, {
       Connection: "keep-alive",
@@ -29,13 +27,13 @@ qt.on("ready", function(err, res) {
   app.get("/chartinfo", (req, res) => {
     getChartInfo(res);
   });
-});
+ });
 
 function getChartInfo(res) {
   qt.getPositions(function(err, positions) {
-    if (err) {
-      console.log(err);
-    }
+		if (err) {
+			next(err);
+		}
     chartInfo = positions;
     res.send(chartInfo);
   });
@@ -56,9 +54,9 @@ function getWatchlist(res) {
 
   setInterval(function() {
     qt.getQuotes(watchlist, function(err, quotes) {
-      if (err) {
-        console.log(err);
-      }
+			if (err) {
+				next(err);
+			}
       watchlistResults = quotes;
 
       //console.log(JSON.stringify(watchlistResults));
@@ -69,9 +67,9 @@ function getWatchlist(res) {
 
 function searchQt(res) {
   qt.search(searchTerm, function(err, symbol) {
-    if (err) {
-      console.log(err);
-    }
+  	if (err) {
+			next(err);
+		}
     result = symbol;
     res.json(result);
   });
