@@ -32,7 +32,7 @@ qt.on("ready", function(err, res) {
 function getChartInfo(res) {
   qt.getPositions(function(err, positions) {
 		if (err) {
-			next(err);
+			console.log(err);
 		}
     chartInfo = positions;
     res.send(chartInfo);
@@ -55,11 +55,9 @@ function getWatchlist(res) {
   setInterval(function() {
     qt.getQuotes(watchlist, function(err, quotes) {
 			if (err) {
-				next(err);
+				console.log(err);
 			}
       watchlistResults = quotes;
-
-      //console.log(JSON.stringify(watchlistResults));
       res.write("data: " + JSON.stringify({ watchlistResults }) + "\n\n");
     });
   }, 1000);
@@ -68,7 +66,7 @@ function getWatchlist(res) {
 function searchQt(res) {
   qt.search(searchTerm, function(err, symbol) {
   	if (err) {
-			next(err);
+			console.log(err);
 		}
     result = symbol;
     res.json(result);
